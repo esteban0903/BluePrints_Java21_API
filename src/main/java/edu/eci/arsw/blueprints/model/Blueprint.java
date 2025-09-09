@@ -5,12 +5,22 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Blueprint {
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Blueprint {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String author;
     private String name;
+    @ElementCollection
     private final List<Point> points = new ArrayList<>();
-
+    public Blueprint() { };
     public Blueprint(String author, String name, List<Point> pts) {
         this.author = author;
         this.name = name;

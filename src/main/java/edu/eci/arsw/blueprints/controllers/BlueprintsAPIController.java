@@ -32,15 +32,15 @@ public class BlueprintsAPIController {
     public BlueprintsAPIController(BlueprintsServices services) { this.services = services; }
 
 
-        @Operation(summary = "Obtiene todos los planos", description = "Devuelve todos los blueprints almacenados")
-        @ApiResponse(
-            responseCode = "200",
-            description = "Consulta exitosa",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
-            )
+    @Operation(summary = "Obtiene todos los planos", description = "Devuelve todos los blueprints almacenados")
+    @ApiResponse(
+        responseCode = "200",
+        description = "Consulta exitosa",
+        content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
         )
+    )
     public ResponseEntity<ApiResponseDTO<Set<Blueprint>>> getAll() {
         Set<Blueprint> blueprints = services.getAllBlueprints();
         var response = new ApiResponseDTO<>(200, "execute ok", blueprints);

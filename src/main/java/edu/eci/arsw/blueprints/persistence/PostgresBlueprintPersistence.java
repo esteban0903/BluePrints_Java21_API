@@ -3,11 +3,13 @@ package edu.eci.arsw.blueprints.persistence;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 
+@Primary
 @Repository
 public class PostgresBlueprintPersistence implements BlueprintPersistence {
  
