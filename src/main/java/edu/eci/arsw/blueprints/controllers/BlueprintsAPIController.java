@@ -25,6 +25,7 @@ import jakarta.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/api/v1/blueprints")
+
 public class BlueprintsAPIController {
 
     private final BlueprintsServices services;
@@ -41,6 +42,7 @@ public class BlueprintsAPIController {
             schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
         )
     )
+    @GetMapping
     public ResponseEntity<ApiResponseDTO<Set<Blueprint>>> getAll() {
         Set<Blueprint> blueprints = services.getAllBlueprints();
         var response = new ApiResponseDTO<>(200, "execute ok", blueprints);
