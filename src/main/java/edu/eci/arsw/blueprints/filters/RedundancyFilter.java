@@ -10,8 +10,9 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 
 /**
- * Elimina puntos consecutivos duplicados (x,y) para reducir redundancia.
- * Perfil: "redundancy"
+ * Filtro de redundancia: elimina puntos consecutivos duplicados (x,y) en el blueprint.
+ * Reduce la cantidad de datos repetidos y optimiza el plano.
+ * Perfil Spring: "redundancy"
  */
 @Component
 @Profile("redundancy")

@@ -26,13 +26,27 @@ import jakarta.validation.constraints.NotBlank;
 @RestController
 @RequestMapping("/api/v1/blueprints")
 
+/**
+ * Controlador REST para la gestión de planos (blueprints).
+ * Proporciona endpoints para consultar, crear y modificar planos.
+ */
 public class BlueprintsAPIController {
 
+    /**
+     * Servicio principal para operaciones sobre blueprints.
+     */
     private final BlueprintsServices services;
 
+    /**
+     * Constructor con inyección de dependencias.
+     * @param services Servicio de blueprints
+     */
     public BlueprintsAPIController(BlueprintsServices services) { this.services = services; }
 
-
+    /**
+     * Obtiene todos los planos almacenados.
+     * @return ResponseEntity con el listado de blueprints y estado 200.
+     */
     @Operation(summary = "Obtiene todos los planos", description = "Devuelve todos los blueprints almacenados")
     @ApiResponse(
         responseCode = "200",
@@ -49,7 +63,11 @@ public class BlueprintsAPIController {
         return ResponseEntity.ok(response);
     }
 
-    // GET /blueprints/{author}
+    /**
+     * Obtiene los planos de un autor específico.
+     * @param author Nombre del autor
+     * @return ResponseEntity con el listado de planos o error 404 si no existe el autor.
+     */
     @Operation(
     summary = "Obtiene los planos por autor",
     description = "Devuelve todos los blueprints de un autor específico"
@@ -78,23 +96,28 @@ public class BlueprintsAPIController {
         }
     }
 
-    // GET /blueprints/{author}/{bpname}
-        @Operation(
-            summary = "Obtiene un plano por autor y nombre",
-            description = "Devuelve un blueprint específico dado el autor y el nombre"
+    /**
+     * Obtiene un plano específico por autor y nombre.
+     * @param author Nombre del autor
+     * @param bpname Nombre del plano
+     * @return ResponseEntity con el plano o error 404 si no existe.
+     */
+    @Operation(
+        summary = "Obtiene un plano por autor y nombre",
+        description = "Devuelve un blueprint específico dado el autor y el nombre"
+    )
+    @ApiResponse(
+        responseCode = "200",
+        description = "Consulta exitosa",
+        content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
         )
-        @ApiResponse(
-            responseCode = "200",
-            description = "Consulta exitosa",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
-            )
-        )
-        @ApiResponse(
-            responseCode = "404",
-            description = "Plano no encontrado"
-        )
+    )
+    @ApiResponse(
+        responseCode = "404",
+        description = "Plano no encontrado"
+    )
     @GetMapping("/{author}/{bpname}")
     public ResponseEntity<ApiResponseDTO<Blueprint>> byAuthorAndName(@PathVariable String author, @PathVariable String bpname) {
         try {
@@ -107,23 +130,27 @@ public class BlueprintsAPIController {
         }
     }
 
-    // POST /blueprints
-        @Operation(
-            summary = "Crea un nuevo plano",
-            description = "Agrega un nuevo blueprint al sistema"
+    /**
+     * Crea un nuevo plano en el sistema.
+     * @param req Datos del nuevo plano
+     * @return ResponseEntity con el plano creado o error 400 si falla la persistencia.
+     */
+    @Operation(
+        summary = "Crea un nuevo plano",
+        description = "Agrega un nuevo blueprint al sistema"
+    )
+    @ApiResponse(
+        responseCode = "201",
+        description = "Plano creado",
+        content = @Content(
+            mediaType = "application/json",
+            schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
         )
-        @ApiResponse(
-            responseCode = "201",
-            description = "Plano creado",
-            content = @Content(
-                mediaType = "application/json",
-                schema = @Schema(implementation = edu.eci.arsw.blueprints.model.Blueprint.class)
-            )
-        )
-        @ApiResponse(
-            responseCode = "400",
-            description = "Error de persistencia"
-        )
+    )
+    @ApiResponse(
+        responseCode = "400",
+        description = "Error de persistencia"
+    )
     @PostMapping
     public ResponseEntity<ApiResponseDTO<Blueprint>> add(@Valid @RequestBody NewBlueprintRequest req) {
         try {
@@ -137,7 +164,13 @@ public class BlueprintsAPIController {
         }
     }
 
-    // PUT /blueprints/{author}/{bpname}/points
+    /**
+     * Agrega un punto a un plano existente.
+     * @param author Nombre del autor
+     * @param bpname Nombre del plano
+     * @param p Punto a agregar
+     * @return ResponseEntity con estado 202 si se agrega, o 404 si no existe el plano.
+     */
     @Operation(
         summary = "Agrega un punto a un plano existente",
         description = "Añade un nuevo punto a un blueprint específico"
@@ -167,6 +200,12 @@ public class BlueprintsAPIController {
         }
     }
 
+    /**
+     * DTO para la creación de nuevos planos.
+     * @param author Autor del plano
+     * @param name Nombre del plano
+     * @param points Lista de puntos del plano
+     */
     public record NewBlueprintRequest(
             @NotBlank String author,
             @NotBlank String name,

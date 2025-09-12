@@ -6,8 +6,9 @@ import org.springframework.stereotype.Component;
 import edu.eci.arsw.blueprints.model.Blueprint;
 
 /**
- * Default filter: returns the blueprint unchanged.
- * This matches the baseline behavior of the reference lab before students implement custom filters.
+ * Filtro por defecto: retorna el blueprint sin modificaciones.
+ * Útil como referencia o para desactivar la filtración.
+ * Perfil Spring: "identity"
  */
 @Component
 @Profile("identity")
