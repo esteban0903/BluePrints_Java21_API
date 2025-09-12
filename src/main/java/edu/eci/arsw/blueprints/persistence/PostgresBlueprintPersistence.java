@@ -92,5 +92,6 @@ public class PostgresBlueprintPersistence implements BlueprintPersistence {
     public void addPoint(String author, String name, int x, int y) throws BlueprintNotFoundException {
         Blueprint bp = getBlueprint(author, name);
         bp.addPoint(new Point(x, y));
+        blueprintRepository.save(bp); // Guardar los cambios en la base de datos
     }
 }
