@@ -10,8 +10,9 @@ import edu.eci.arsw.blueprints.model.Blueprint;
 import edu.eci.arsw.blueprints.model.Point;
 
 /**
- * Undersampling: conserva 1 de cada 2 puntos (índices pares), reduciendo la densidad.
- * Perfil: "undersampling"
+ * Filtro de undersampling: conserva 1 de cada 2 puntos (índices pares) en el blueprint.
+ * Reduce la densidad de puntos para simplificar el plano.
+ * Perfil Spring: "undersampling"
  */
 @Component
 @Profile("undersampling")
